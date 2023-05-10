@@ -1,10 +1,29 @@
 # 拼码狮（PinMaShi）图形化编程
 
-#### 简介
-
 拼码狮（PinMaShi）是拖拽积木式快速生成Python代码的编程软件。图形化拖拽式编程有效降低编程难度，对Python编程的初学者非常友好；积木式编程加快Python程序的开发，代码使用积木封装加快编程速度；打通硬件间通信实现计算机和智能设备协同编程，一键在本地机器和远程机器调试运行，是Python程序快速开发的利器。PinMaShi采用模块化构建项目工程，通过模块创建工程能够应用在多种场景，例如PC电脑一般程序开发，爬虫项目、物联网项目，树莓派硬件和乐高机器人的远程开发调试，ESP32的python编程应用等。使用PinMaShi将大大简化程序的开发调试过程，积木式编程也更直观更能理解程序逻辑。
 
-#### 使用方法
+## 克隆项目
+
+你需要[Git](https://git-scm.com)工具和[Node.js](https://nodejs.org/en/download/) (包含[npm](http://npmjs.com))克隆到本地才能运行，执行以下命令:
+
+```bash
+# 克隆仓库
+git clone https://github.com/supercoderlee/pinmashi.git
+# 进入目录
+cd pinmashi
+# 安装依赖
+npm install
+# 运行应用
+npm start
+```
+
+## VSCode安装Minify插件
+
+VSCode编辑器安装插件**Minify**插件用于将.js源文件压缩为.min.js版本，项目最终执行的是.min.js文件。
+
+在当前打开的.js文件F1选择Minify即可生成min.js压缩文件，插件设置将Minify Existing On Save项打钩即可保存时自动更新对应的.min.js文件。
+
+## 程序使用方法
 
 运行软件后进入欢迎界面，点击”**开始编程**“进入积木编程界面，此时软件默认使用标准模块创建工程项目。
 

@@ -1,31 +1,19 @@
-/*
- * @Description: PinMaShi renderer javascript
- * @Author: ZhenLi
- * @Date: 2022-10-06 21:49:41
- * @LastModifiedBy: ZhenLi
- * @LastEditTime: 2022-10-28 02:00:10
- */
-
 function PromptModal(title, message, defaultValue, callback) {
     document.getElementById('promptModalLabel').innerHTML = title;
     document.getElementById('promptModalMessage').innerHTML = message;
     document.getElementById('promptModalValue').value = defaultValue;
     $('#promptModal').modal('show');
     document.getElementById('promptModalOk').onclick = () => {
-        // 回调函数
         callback(document.getElementById('promptModalValue').value);
     };
-
     document.getElementById('promptModalValue').onkeydown = (event) => {
         if (event.keyCode == 13) {
-            // 回车回调函数
             callback(document.getElementById('promptModalValue').value);
             $('#promptModal').modal('hide');
-            return false; // 不返回flase页面将会重载
+            return false;
         }
     };
 }
-
 function MultePromptModal(title, inputs, callback) {
     document.getElementById('multePromptModalLabel').innerHTML = title;
     document.getElementById('mainform').innerHTML = '';
@@ -35,18 +23,15 @@ function MultePromptModal(title, inputs, callback) {
                     <input type="text" class="form-control" id="multePromptModalValue-${index}" value="${input.value}">
                 </div>`;
         document.getElementById('mainform').insertAdjacentHTML('beforeend', inputDiv);
-        // 回车确定
         document.getElementById(`multePromptModalValue-${index}`).onkeydown = (event) => {
             if (event.keyCode == 13) {
-                // 回车回调函数
                 let arrValue = [];
                 inputs.forEach((input, index) => {
                     arrValue.push(document.getElementById('multePromptModalValue-' + index).value);
                 });
-                // 回调函数
                 callback(arrValue);
                 $('#multePromptModal').modal('hide');
-                return false; // 不返回flase页面将会重载
+                return false;
             }
         };
     });
@@ -56,71 +41,56 @@ function MultePromptModal(title, inputs, callback) {
         inputs.forEach((input, index) => {
             arrValue.push(document.getElementById('multePromptModalValue-' + index).value);
         });
-        // 回调函数
         callback(arrValue);
     };
 }
-
 function ConfirmModal(title, message, callback = null) {
     document.getElementById('confirmModalLabel').innerHTML = title;
     document.getElementById('confirmModalMessage').innerHTML = message;
     $('#confirmModal').modal('show');
     document.getElementById('confirmModalOk').onclick = () => {
         if (callback) {
-            // 回调函数
             callback();
         }
     };
 }
-
 function AlertModal(title, message, callback = null) {
     document.getElementById('alertModalLabel').innerHTML = title;
     document.getElementById('alertModalMessage').innerHTML = message;
     $('#alertModal').modal('show');
     document.getElementById('alertModalOk').onclick = () => {
         if (callback) {
-            // 回调函数
             callback();
         }
     };
 }
-
 let appIsPackaged = ipcRendererApi.sendSync('app-IsPackaged', '');
-
 ipcRendererApi.on('event-relay', (event, eventName) => {
     ipcRendererApi.send(eventName);
 });
-
-
-
 let publicData = {
     project: {
         name: "",
         module: "",
         filename: "",
-        isSave: 0, 
+        isSave: 0,
     },
     device: {
-        host: '', 
+        host: '',
         isShell: 0
     },
     module: {
-        toolbox: null, 
-        debugCommand: null, 
-        headCode: [] 
+        toolbox: null,
+        debugCommand: null,
+        headCode: []
     }
 };
-
-
 let blocklyWorkspace = null;
-
 publicData.project.name = 'demo';
 publicData.project.filename = '';
 publicData.project.isSave = 0;
 ChangeTitle();
-
 LoadModulesData();
-
 function LoadModulesData() {
     let modulesPath = appIsPackaged ? 'resources/block_modules/modules.json' : './block_modules/modules.json';
     fsApi.readFile(modulesPath, 'utf8', function (err, data) {
@@ -149,14 +119,11 @@ function LoadModulesData() {
         }
     });
 }
-
 ipcRendererApi.on('load-modules-data', (event, data) => {
     LoadModulesData();
 });
-
 var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("textarea-code"), {
     mode: "python",
-    // theme: "dracula",
     keyMap: "sublime",
     lineNumbers: true,
     smartIndent: true,
@@ -168,12 +135,11 @@ var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("textarea-cod
     autofocus: true,
     matchBrackets: true,
     autoCloseBrackets: true,
-    styleActiveLine: true
+    styleActiveLine: true,
 });
 myCodeMirror.on("keypress", function () {
     myCodeMirror.showHint();
 });
-
 function CreateProject(module) {
     $('#homeModal').modal('hide');
     PromptModal('请输入', '项目名称', '', (data) => {
@@ -186,7 +152,6 @@ function CreateProject(module) {
         }
     });
 }
-
 Blockly.Themes.NewTheme = Blockly.Theme.defineTheme('halloween', {
     'base': Blockly.Themes.Classic,
     'componentStyles': {
@@ -204,7 +169,6 @@ Blockly.Themes.NewTheme = Blockly.Theme.defineTheme('halloween', {
         'blackBackground': '#333'
     }
 });
-
 function LoadWorkSpace(module, workSpaceData = {}) {
     publicData.module.debugCommand = null;
     blockApi.LoadModules(module, () => {
@@ -212,7 +176,6 @@ function LoadWorkSpace(module, workSpaceData = {}) {
         publicData.module.headCode = [];
         document.getElementById('blockly-workspace').innerHTML = '';
         document.getElementById('textarea-code').value = '';
-
         blocklyWorkspace = Blockly.inject('blockly-workspace', {
             media: './assets/blockly/media/',
             toolbox: publicData.module.toolbox,
@@ -252,16 +215,11 @@ function LoadWorkSpace(module, workSpaceData = {}) {
         });
     });
 }
-
 Blockly.prompt = (message, defaultValue, callback) => {
     PromptModal('请输入', message, defaultValue, (data) => {
         if (data) callback(data);
     });
 };
-
-
-
-
 ipcRendererApi.on('new-project', (event, data) => {
     if (publicData.project.isSave == 0) {
         ConfirmModal('提示', '当前项目未保存，确定要新建项目吗？', () => {
@@ -271,7 +229,6 @@ ipcRendererApi.on('new-project', (event, data) => {
         $('#homeModal').modal('show');
     }
 });
-
 ipcRendererApi.on('open-project', (event, data) => {
     if (publicData.project.isSave == 0) {
         ConfirmModal('提示', '当前项目未保存，确定要打开项目吗？', () => {
@@ -281,7 +238,6 @@ ipcRendererApi.on('open-project', (event, data) => {
         LoadProjectFile();
     }
 });
-
 ipcRendererApi.on('save-project', (event, data) => {
     if (publicData.project.filename == '') {
         ipcRendererApi.send('showSaveDialog', publicData.project.name);
@@ -294,7 +250,6 @@ ipcRendererApi.on('save-project', (event, data) => {
         SaveProjectFile(publicData.project.filename);
     }
 });
-
 ipcRendererApi.on('save-project-as', (event, data) => {
     ipcRendererApi.send('showSaveDialog', publicData.project.name);
     ipcRendererApi.once('savedialog-callback', (event, filename) => {
@@ -303,7 +258,6 @@ ipcRendererApi.on('save-project-as', (event, data) => {
         }
     });
 });
-
 ipcRendererApi.on('rename-project', (event, data) => {
     PromptModal('请输入', '项目名称', publicData.project.name, (data) => {
         if (data) {
@@ -318,7 +272,6 @@ ipcRendererApi.on('rename-project', (event, data) => {
         }
     });
 });
-
 ipcRendererApi.on('exit-program', (event, data) => {
     if (publicData.project.isSave == 0) {
         ConfirmModal('提示', '当前项目未保存，确定要退出程序吗？', () => {
@@ -330,7 +283,6 @@ ipcRendererApi.on('exit-program', (event, data) => {
         });
     }
 });
-
 ipcRendererApi.on('device-connect', (event, data) => {
     MultePromptModal("连接设备", [
         { label: "设备IP", value: "" },
@@ -355,10 +307,8 @@ ipcRendererApi.on('device-connect', (event, data) => {
             }
         }
     });
-
-
 });
-
+//
 ipcRendererApi.on('run-local', (event, data) => {
     if (publicData.project.filename == '') {
         ipcRendererApi.send('showSaveDialog', publicData.project.name);
@@ -379,7 +329,6 @@ ipcRendererApi.on('run-local', (event, data) => {
         });
     }
 });
-
 ipcRendererApi.on('run-device', (event, data) => {
     if (!publicData.device.host) {
         ConfirmModal('提示', '未连接设备无法调试，确定要连接设备吗？', () => {
@@ -411,36 +360,21 @@ ipcRendererApi.on('run-device', (event, data) => {
     outputData = [];
     document.getElementById('output-shell').value = '';
 });
-
+//
 ipcRendererApi.on('clear-console', (event, data) => {
-    outputData = []; //清空控制台输出缓存数组
+    outputData = [];
     document.getElementById('output-shell').value = '';
 });
-
 ipcRendererApi.on('new-bash', (event, data) => {
     ipcRendererApi.send('local-create-shell');
 });
-
-ipcRendererApi.on('about-program', (event, data) => {
-    AlertModal('关于',
-        `<p>软件版本：1.0.0</p>
-    <p>软件版权：本软件版权归作者所有，禁止任何人组织机构用于商业用途。</p>
-    <p>软件简介：本软件是为智能设备编程而制作的程序开发编辑器，采用可视化拖拽式积木结合实际代码编程，有效降低编程难度且能更直观理解程序逻辑。软件主要用途是为基于Linux操作系统的智能设备进行远程开发和调试，
-    通过软件能快速编程并在远程设备上执行和交互。另外软件还结合物联网开发实现上位机下位机的程序开发，实现物联网设备互联互通。</p>`
-    );
-});
-
 document.getElementById('input-shell').onkeydown = (event) => {
     if (event.keyCode == 13) {
-        // 回车发送内容
         let element = document.getElementById('input-shell');
         ipcRendererApi.send('device-shell-write', element.value);
         element.value = '';
     }
 };
-
-
-
 ipcRendererApi.on('device-reply', (event, data) => {
     switch (data) {
         case 'success':
@@ -479,7 +413,6 @@ ipcRendererApi.on('device-reply', (event, data) => {
     }
     outputData.push(data);
 });
-
 let outputData = [];
 setInterval(() => {
     let dataCount = outputData.length;
@@ -491,7 +424,6 @@ setInterval(() => {
         if (dataCount > 50) outputData = [];
     }
 }, 100);
-
 function LoadProjectFile() {
     ipcRendererApi.send('showOpenDialog', '');
     ipcRendererApi.once('opendialog-callback', (event, filename) => {
@@ -524,7 +456,6 @@ function LoadProjectFile() {
         });
     });
 }
-
 function SaveProjectFile(filename) {
     let arr = filename.split('\\');
     let projectName = arr[arr.length - 1].replace('.pmsproj', '');
@@ -545,18 +476,15 @@ function SaveProjectFile(filename) {
     });
     fsApi.writeFile(GetPyFileName(filename), myCodeMirror.getValue(), (err) => { });
 }
-
 function GetPyFileName(filename) {
     return filename.substring(0, filename.length - 8) + '.py';
 }
-
 function ChangeTitle() {
     let title = publicData.project.name;
     title += publicData.device.host ? ` - 已连接${publicData.device.host}设备` : '';
     title += ' - PinMaShi';
     document.title = title;
 }
-
 function AddHeadCode(codeName, codeValue, blockType, isTop = 0) {
     let isExist = publicData.module.headCode.every(element => {
         if (element.name == codeName) {
@@ -576,7 +504,6 @@ function AddHeadCode(codeName, codeValue, blockType, isTop = 0) {
         }
     }
 }
-
 function DelHeadCode() {
     for (let i = 0; i < publicData.module.headCode.length; i++) {
         let element = publicData.module.headCode[i];

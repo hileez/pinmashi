@@ -1,15 +1,6 @@
-/*
- * @Description: PinMaShi main javascript
- * @Author: ZhenLi
- * @Date: 2022-10-06 21:49:33
- * @LastModifiedBy: ZhenLi
- * @LastEditTime: 2022-10-25 13:13:28
- */
-
 const { app, BrowserWindow, ipcMain, dialog, Menu, MenuItem } = require('electron')
 const path = require('path')
 const { spawn, exec } = require('child_process');
-
 let mainWindow;
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -19,13 +10,12 @@ function createWindow() {
     minHeight: 860,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      sandbox: false
+      sandbox: false,
     }
   })
   mainWindow.loadFile('./assets/pages/home.html')
   app.isPackaged ? "" : mainWindow.webContents.openDevTools()
 }
-
 const template = [
   {
     label: '文件',
@@ -77,7 +67,6 @@ const template = [
       },
       {
         label: '退出',
-        // accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Alt+Shift+I',
         click: () => {
           mainWindow.webContents.send('exit-program');
         }
@@ -161,7 +150,6 @@ const template = [
     submenu: [
       {
         label: '加入交流学习QQ群',
-        // accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Alt+Shift+I',
         click: () => {
           dialog.showMessageBox(mainWindow, {
             type: "info",
@@ -173,56 +161,47 @@ const template = [
       },
       {
         label: '官方Github',
-        // accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Alt+Shift+I',
         click: () => {
-          exec('start https://github.com/supercoderlee/damakuai');
+          exec('start https://github.com/supercoderlee/pinmashi');
         }
       },
       {
         label: '模块下载',
-        // accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Alt+Shift+I',
         click: () => {
-          exec('start https://github.com/supercoderlee/damakuai-resources');
+          exec('start https://github.com/supercoderlee/pinmashi-resources');
         }
       },
       {
         label: '检查更新…',
-        // accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Alt+Shift+I',
         click: () => {
           UpdateCheck();
         }
       },
       {
         label: '关于',
-        // accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Alt+Shift+I',
         click: () => {
           dialog.showMessageBox(mainWindow, {
             type: "info",
             title: "提示",
-            message: "软件版本：v1.0.0\n本软件以MIT开源协议发布在github和gitee上供大家学习和使用。这是一个用图形化编程python的软件，集成远程开发调试等功能，采用可视化拖拽式积木编程，有效降低编程难度且能更直观理解程序逻辑。远程开发主要用在基于Linux操作系统的智能设备远程程序开发和调试。软件还结合物联网开发实现上位机和下位机的程序开发，实现物联网设备互联互通。",
+            message: "软件版本：1.0.0\n软件版权：本软件版权归作者所有，软件仅供学习使用禁止任何人或组织机构用作商业用途。\n软件简介：本软件是为智能设备编程研发的程序编辑器，采用可视化拖拽式积木编程，有效降低编程难度且能更直观理解程序逻辑。软件主要用在基于Linux操作系统的智能设备远程程序开发和调试。\n另外软件还结合物联网开发实现上位机和下位机的程序开发，实现物联网设备互联互通。",
             buttons: ["确定"]
           }).then((index) => { });
-
         }
       }
     ]
   },
 ]
-
 Menu.setApplicationMenu(Menu.buildFromTemplate(template))
-
 app.whenReady().then(() => {
   createWindow()
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   });
 })
-
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
   mainWindow = null;
 })
-
 const fs = require('fs');
 const compressing = require('compressing');
 function ImportBlockModule(filename, callback = null) {
@@ -259,7 +238,6 @@ function ImportBlockModule(filename, callback = null) {
     console.log('解压失败')
   })
 }
-
 function OpenBlockModule() {
   dialog.showOpenDialog(mainWindow, {
     title: "导入模块",
@@ -289,23 +267,18 @@ function OpenBlockModule() {
     console.log(err)
   });
 }
-
 ipcMain.on('app-IsPackaged', function (event, arg) {
   event.returnValue = app.isPackaged;
 });
-
 ipcMain.on('app-quit', function (event, arg) {
   app.quit();
 });
-
 ipcMain.on('resend-renderer', function (event, arg) {
   event.sender.send(arg)
 });
-
 ipcMain.on('app-path', function (event, arg) {
   event.returnValue = app.getAppPath();
 });
-
 ipcMain.on('showOpenDialog', function (event, arg) {
   dialog.showOpenDialog(mainWindow, {
     title: "打开文件",
@@ -321,7 +294,6 @@ ipcMain.on('showOpenDialog', function (event, arg) {
     console.log(err)
   });
 });
-
 ipcMain.on('showSaveDialog', function (event, arg) {
   dialog.showSaveDialog(mainWindow, {
     title: "保存文件",
@@ -340,7 +312,6 @@ ipcMain.on('showSaveDialog', function (event, arg) {
     console.log(err)
   });
 });
-
 ipcMain.on('local-python-run', function (event, arg) {
   if (process.platform == 'linux' || process.platform == 'darwin') {
     const process = spawn('bash', {
@@ -356,7 +327,6 @@ ipcMain.on('local-python-run', function (event, arg) {
     });
   }
 });
-
 ipcMain.on('local-create-shell', function (event, arg) {
   if (process.platform == 'linux' || process.platform == 'darwin') {
   } else if (process.platform == 'win32') {
@@ -366,11 +336,9 @@ ipcMain.on('local-create-shell', function (event, arg) {
     });
   }
 });
-
 ipcMain.on('open-link', (event, arg) => {
   exec(`start ${arg}`);
 });
-
 const { Client } = require('ssh2');
 const conn = new Client();
 connected = {
@@ -382,7 +350,6 @@ connected = {
   stream: null,
   pids: []
 }
-
 conn.on('ready', () => {
   console.log('Client :: ready');
   mainWindow.webContents.send('device-reply', 'success');
@@ -391,7 +358,6 @@ conn.on('ready', () => {
     connected.sftp = sftp;
   });
 });
-
 conn.on('error', (err) => {
   console.log('Connection :: error :: ' + err);
   connected.sftp = null;
@@ -400,7 +366,6 @@ conn.on('error', (err) => {
   conn.end();
   if (mainWindow) mainWindow.webContents.send('device-reply', 'error');
 });
-
 conn.on('end', () => {
   console.log('Connection :: end');
   connected.sftp = null;
@@ -408,7 +373,6 @@ conn.on('end', () => {
   connected.pids = [];
   if (mainWindow) mainWindow.webContents.send('device-reply', 'end');
 });
-
 conn.on('close', (had_error) => {
   console.log('Connection :: close');
   connected.sftp = null;
@@ -416,7 +380,6 @@ conn.on('close', (had_error) => {
   connected.pids = [];
   if (mainWindow) mainWindow.webContents.send('device-reply', 'close');
 });
-
 ipcMain.on('device-connect', function (event, data) {
   if (connected.sftp) conn.end();
   conn.connect(data);
@@ -425,12 +388,9 @@ ipcMain.on('device-connect', function (event, data) {
   connected.username = data.username;
   connected.password = data.password;
 });
-
 ipcMain.on('device-close', function (event, data) {
   conn.end();
 });
-
-
 const device = require('./addons/device');
 ipcMain.on('device-python-run', function (event, data) {
   if (connected.sftp) {
@@ -467,19 +427,16 @@ ipcMain.on('device-python-run', function (event, data) {
     });
   }
 });
-
 ipcMain.on('device-shell-write', function (event, data) {
   if (connected.stream) {
     connected.stream.write(`${data}\n`);
   }
 });
-
 ipcMain.on('device-shell-close', function (event, data) {
   if (connected.pids && connected.sftp) {
     device.DebugEnd(conn);
   }
 });
-
 OutputFilter = function (streamStr) {
   streamStr = streamStr.indexOf('chmod') > -1 ? '' : streamStr;
   streamStr = streamStr.indexOf('cd') > -1 ? '' : streamStr;
@@ -490,7 +447,6 @@ OutputFilter = function (streamStr) {
   streamStr = streamStr.replace('[?2004h', '');
   return streamStr;
 }
-
 const https = require('https');
 const cheerio = require('cheerio');
 function UpdateCheck() {

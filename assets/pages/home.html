@@ -104,14 +104,16 @@
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <div class="col-md-4 d-flex align-items-center">
                 <a href="#" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1" onclick="openGithub()">
-                    <svg class="bi" width="30" height="24">
+                    <!-- <svg class="bi" width="30" height="24">
                         <use xlink:href="#github" />
-                    </svg>
+                    </svg> -->
+                    <img src="../../assets/img/logo30.png" alt="">
                 </a>
                 <span class="mb-3 mb-md-0 text-muted">&copy; 2023 PinMaShi, Inc</span>
             </div>
             <ul class="nav col-md-6 justify-content-end list-unstyled d-flex">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted" onclick="openGithub()">博客</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted" onclick="openGithub()">Github仓库</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted" onclick="openGitee()">Gitee仓库</a></li>
                 <li class="nav-item"><a href="#" class="nav-link px-2 text-muted" onclick="downApp()">更新软件</a></li>
                 <li class="nav-item"><a href="#" class="nav-link px-2 text-muted" onclick="downModule()">下载模块</a></li>
                 <li class="nav-item"><a href="#" class="nav-link px-2 text-muted" onclick="openLearnPage()">学习教程</a></li>
@@ -126,7 +128,7 @@
             window.location.href = '../../index.html';
         }
         function downApp() {
-            ipcRendererApi.send('open-link', 'https://github.com/supercoderlee/pinmashi/releases');
+            ipcRendererApi.send('open-link', 'https://gitee.com/supercoderlee/pinmashi/releases');
         }
         function downModule() {
             ipcRendererApi.send('open-link', 'https://github.com/supercoderlee/pinmashi-resources');
@@ -134,11 +136,14 @@
         function openGithub() {
             ipcRendererApi.send('open-link', 'https://github.com/supercoderlee/pinmashi');
         }
+        function openGitee() {
+            ipcRendererApi.send('open-link', 'https://gitee.com/supercoderlee/pinmashi');
+        }
         function openLearnPage() {
             ipcRendererApi.send('open-link', 'https://github.com/supercoderlee/pinmashi-resources');
         }
         function qqGroup() {
-            alert("软件使用交流群、编程学习交流群：647165120");
+            alert("软件使用交流群、编程学习交流群:647165120");
         }
     </script>
 </body>

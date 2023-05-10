@@ -5,20 +5,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>PinMaShi</title>
+    <!-- bootstrap -->
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/css/styles.min.css">
-    <link rel="stylesheet" href="assets/codemirror/lib/codemirror.css" rel="external nofollow">
-    <link rel="stylesheet" href="assets/codemirror/addon/fold/foldgutter.css" rel="external nofollow">
-    <link rel="stylesheet" href="assets/codemirror/addon/hint/show-hint.css" rel="external nofollow">
-    <link rel="stylesheet" href="assets/codemirror/addon/lint/lint.css" rel="external nofollow">
-    <link rel="stylesheet" href="assets/codemirror/theme/dracula.css" rel="external nofollow">
+    <!-- 编辑器 -->
+    <link rel="stylesheet" href="assets/codemirror/lib/codemirror.css" rel="external nofollow" >
+    <link rel="stylesheet" href="assets/codemirror/addon/fold/foldgutter.css" rel="external nofollow" >
+    <link rel="stylesheet" href="assets/codemirror/addon/hint/show-hint.css" rel="external nofollow" >
+    <link rel="stylesheet" href="assets/codemirror/addon/lint/lint.css" rel="external nofollow" >
+    <link rel="stylesheet" href="assets/codemirror/theme/dracula.css" rel="external nofollow" >
     <script src="assets/codemirror/lib/codemirror.js"></script>
     <script src="assets/codemirror/addon/comment/comment.js"></script>
     <script src="assets/codemirror/addon/selection/active-line.js"></script>
     <script src="assets/codemirror/keymap/sublime.js"></script>
     <script src="assets/codemirror/addon/hint/show-hint.js"></script>
-    <script src="assets/codemirror/mode/python/python.js"></script>
+    <script src="assets/codemirror/mode/python/python.js"></script> 
     <script src="assets/codemirror/addon/fold/foldcode.js"></script>
     <script src="assets/codemirror/addon/fold/foldgutter.js"></script>
     <script src="assets/codemirror/addon/fold/brace-fold.js"></script>
@@ -26,10 +28,12 @@
     <script src="assets/codemirror/addon/fold/comment-fold.js"></script>
     <script src="assets/codemirror/addon/edit/closebrackets.js"></script>
     <script src="assets/codemirror/addon/edit/matchbrackets.js"></script>
+    <!-- blockly -->
     <script src="./assets/blockly/blockly/blockly_compressed.js"></script>
     <script src="./assets/blockly/blockly/blocks_compressed.js"></script>
     <script src="./assets/blockly/blockly/python_compressed.js"></script>
     <script src="./assets/blockly/msg/js/zh-hans.js"></script>
+    <!-- jquery -->
     <script src="./assets/jquery/jquery-3.6.1.min.js"></script>
     <link rel="stylesheet" href="assets/css/custom.css">
 </head>
@@ -37,10 +41,11 @@
 <body>
     <div class="row" id="row-main">
         <div class="col-md-8 padding-0" id="blockly-workspace"></div>
-        <div class="col-md-4 padding-0" id="python-workspace"><textarea id="textarea-code" class="form-control"
-                name="textarea-code"></textarea></div>
+        <div class="col-md-4 padding-0" id="python-workspace"><textarea id="textarea-code" class="form-control" name="textarea-code"></textarea></div>
     </div>
     <div class="row" id="row-state">
+        
+
         <div class="col padding-0" id="col-state">
             <div class="row" id="row-textarea">
                 <div class="col padding-0" id="col-textarea"><textarea id="output-shell" readonly=""></textarea></div>
@@ -49,108 +54,148 @@
                 <div class="col-md-1 padding-0" id="input-icon"><i class="fas fa-chevron-right"></i></div>
                 <div class="col-md-11 padding-0" id="col-input"><input type="text" id="input-shell"></div>
             </div>
+
+            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#alertModal">Launch demo modal</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Launch demo modal</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#promptModal">Launch demo modal</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deviceConnectModal">Launch demo modal</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#homeModal">Launch demo modal</button>
+            <button type="button" class="btn btn-primary" id="showTest">showTest</button> -->
         </div>
+
     </div>
+
+    
+    <!-- Alert Modal -->
     <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="alertModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="alertModalMessage">
-                    Modal body text goes here.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="alertModalOk">确定</button>
-                </div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="alertModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body" id="alertModalMessage">
+                Modal body text goes here.
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="alertModalOk">确定</button>
+            </div>
+        </div>
         </div>
     </div>
 
+    <!-- Confirm Modal -->
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="confirmModalMessage">
-                    Modal body text goes here.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                        id="confirmModalOk">确定</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                </div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body" id="confirmModalMessage">
+                Modal body text goes here.
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="confirmModalOk">确定</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+            </div>
+        </div>
         </div>
     </div>
 
+    <!-- Prompt Modal -->
     <div class="modal fade" id="promptModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="promptModalLabel">New message</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label"
-                                id="promptModalMessage">Recipient:</label>
-                            <input type="text" class="form-control" id="promptModalValue">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="promptModalOk">确定</button>
-                </div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="promptModalLabel">New message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label" id="promptModalMessage">Recipient:</label>
+                        <input type="text" class="form-control" id="promptModalValue">
+                    </div>
+                    <!-- <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div> -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="promptModalOk">确定</button>
+                <!-- <button type="button" class="btn btn-primary">OK</button> -->
+            </div>
             </div>
         </div>
     </div>
 
+    <!-- Multe Prompt Modal -->
     <div class="modal fade" id="multePromptModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="multePromptModalLabel">设备连接</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="mainform">
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                        id="multePromptModalOk">确定</button>
-                </div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="multePromptModalLabel">设备连接</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="mainform">
+                    <!-- <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">IP地址:</label>
+                        <input type="text" class="form-control" id="multePromptModalValue">
+                    </div> -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="multePromptModalOk">确定</button>
+                <!-- <button type="button" class="btn btn-primary">OK</button> -->
+            </div>
             </div>
         </div>
     </div>
 
+    <!-- Home Modal -->
     <div class="modal fade" id="homeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-fullscreen modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">新建项目</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col">
-                            <div class="container py-4 py-xl-5 create-page">
-                                <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3" id="card-list">
-                                </div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">新建项目</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- card begin -->
+                <div class="row">
+                    <div class="col">
+                        <div class="container py-4 py-xl-5 create-page">
+                            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3" id="card-list">
+                                <!-- <div class="col"><a class="card-link" href="#">
+                                        <div class="card"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                                            <div class="card-body p-4">
+                                                <h4 class="card-title">Lorem libero donec</h4>
+                                                <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                                                <div class="card-icon"><i class="fas fa-plus-circle"></i></div>
+                                            </div>
+                                        </div>
+                                    </a></div> -->
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- card end -->
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send message</button>
+            </div> -->
             </div>
         </div>
     </div>
+
+
+
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="renderer.js"></script>
+    <script src="renderer.min.js"></script>
 </body>
 
 </html>

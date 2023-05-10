@@ -2,9 +2,12 @@
   "name": "pinmashi",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.min.js",
   "scripts": {
     "start": "electron .",
+    "build": "node-gyp configure build",
+    "rebuild": "node-gyp rebuild",
+    "clean": "node-gyp clean",
     "electron-build": "electron-builder"
   },
   "build": {
@@ -23,8 +26,14 @@
       "!other",
       "!*.gyp",
       "!*.zip",
+      "!*.rar",
+      "!*.7z",
       "!*.txt",
-      "!release"
+      "!README.md",
+      "!release",
+      "!*.dev.js",
+      "!renderer.js",
+      "!index.js"
     ],
     "extraResources": [
       {
@@ -93,6 +102,7 @@
   "devDependencies": {
     "electron": "^20.0.2",
     "electron-builder": "^23.6.0",
-    "node-gyp": "^9.3.1"
+    "node-addon-api": "^5.0.0",
+    "node-gyp": "^9.3.0"
   }
 }
