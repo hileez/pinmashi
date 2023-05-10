@@ -1,0 +1,12 @@
+node_modules
+package-lock.json
+*.rar
+*.zip
+/pyscript/venv
+/pyscript/__pycache__
+dist
+other
+src
+*.gyp
+readme.txt
+yarn.lock

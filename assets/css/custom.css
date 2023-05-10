@@ -1,0 +1,64 @@
+/* 自定义滚动条 */
+::-webkit-scrollbar{width:8px;height:4px}
+::-webkit-scrollbar-button{width:8px;height:0}
+::-webkit-scrollbar-track{background:0 0}
+::-webkit-scrollbar-thumb{background:#b4b4b45d;-webkit-transition:.3s;transition:.3s;border-radius: 10px;}
+::-webkit-scrollbar-thumb:hover{background-color:#d4d4d4}
+::-webkit-scrollbar-thumb:active{background-color:#d4d4d4}
+
+@font-face{
+    font-family: JetBrainsMono-Regular;
+    src: url("../fonts/JetBrainsMono-Regular.ttf");
+}
+
+body {
+    font-family: JetBrainsMono-Regular;
+    user-select: none;
+}
+
+/* 编辑器样式 */
+.CodeMirror {
+    /* font-family: Arial, monospace; */
+    font-family: JetBrainsMono-Regular;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    border-top:1px solid #dfdfdf;
+}
+
+/* 新建项目选择列表 */
+.card-icon {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+}
+
+.card-icon i {
+    font-size: 36px;
+}
+
+.card-link {
+    color: var(--bs-gray-600);
+    text-decoration: initial;
+}
+
+.card-link:hover {
+    color: #2762b8;
+    text-decoration: initial;
+}
+
+.create-page {
+    padding-top: 0px!important;
+}
+
+#python-put {
+    display: none;
+}
+
+#shell-kill {
+    display: none;
+}
+
+#connect-device {
+    color: crimson;
+}

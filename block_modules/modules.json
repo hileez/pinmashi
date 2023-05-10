@@ -1,0 +1,1 @@
+[{"name":"default","title":"默认标准模块","main":"index.js","description":"PyBlocks默认积木编程模块，包含基础逻辑、运算、变量、函数等基础积木。"},{"name":"ev3-base","title":"乐高EV3基础模块","main":"index.js","description":"乐高EV3基础编程模块，对EV3集线器的声音、显示、电机、传感器等功能编程"},{"name":"ev3-robot","title":"乐高EV3机器人模块","main":"index.js","description":"乐高EV3机器人编程模块，使用预设的机器人模型创建机器人，对机器人声音、显示、驱动、转向、环境感知等功能编程"}]

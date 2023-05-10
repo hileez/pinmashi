@@ -1,0 +1,99 @@
+{
+  "name": "pinmashi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "electron-build": "electron-builder"
+  },
+  "build": {
+    "productName": "PinMaShi",
+    "appId": "com-pinmashi-app",
+    "directories": {
+      "output": "dist"
+    },
+    "asar": true,
+    "files": [
+      "dist/electron/**/*",
+      "**/*",
+      "!.vscode",
+      "!block_modules",
+      "!src",
+      "!other",
+      "!*.gyp",
+      "!*.zip",
+      "!*.txt",
+      "!release"
+    ],
+    "extraResources": [
+      {
+        "from": "./block_modules/",
+        "to": "block_modules"
+      }
+    ],
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "build/icons/icon.ico",
+      "uninstallerIcon": "build/icons/icon.ico",
+      "installerHeaderIcon": "build/icons/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "PinMaShi",
+      "include": "build/script/installer.nsh"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        }
+      ]
+    },
+    "mac": {
+      "icon": "build/icons/icon.icns"
+    },
+    "win": {
+      "icon": "build/icons/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "icon": "build/icons"
+    }
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "compressing": "^1.6.2",
+    "ssh2": "^1.11.0"
+  },
+  "devDependencies": {
+    "electron": "^20.0.2",
+    "electron-builder": "^23.6.0",
+    "node-addon-api": "^5.0.0",
+    "node-gyp": "^9.3.0"
+  }
+}

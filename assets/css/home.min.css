@@ -1,0 +1,113 @@
+.bs-icon {
+    --bs-icon-size: .75rem;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--bs-icon-size);
+    width: calc(var(--bs-icon-size) * 2);
+    height: calc(var(--bs-icon-size) * 2);
+    color: var(--bs-primary)
+}
+
+.bs-icon-xs {
+    --bs-icon-size: 1rem;
+    width: calc(var(--bs-icon-size) * 1.5);
+    height: calc(var(--bs-icon-size) * 1.5)
+}
+
+.bs-icon-sm {
+    --bs-icon-size: 1rem
+}
+
+.bs-icon-md {
+    --bs-icon-size: 1.5rem
+}
+
+.bs-icon-lg {
+    --bs-icon-size: 2rem
+}
+
+.bs-icon-xl {
+    --bs-icon-size: 2.5rem
+}
+
+.bs-icon.bs-icon-primary {
+    color: var(--bs-white);
+    background: var(--bs-primary)
+}
+
+.bs-icon.bs-icon-primary-light {
+    color: var(--bs-primary);
+    background: rgba(var(--bs-primary-rgb), .2)
+}
+
+.bs-icon.bs-icon-semi-white {
+    color: var(--bs-primary);
+    background: rgba(255, 255, 255, .5)
+}
+
+.bs-icon.bs-icon-rounded {
+    border-radius: .5rem
+}
+
+.bs-icon.bs-icon-circle {
+    border-radius: 50%
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 200px
+}
+
+#main {
+    background-color: #32CD32;
+    height: calc(100% - 200px)
+}
+
+body {
+    height: 100vh
+}
+
+.row {
+    padding: 0;
+    margin: 0
+}
+
+#heading-banner {
+    padding: 0 !important;
+    width: 100%;
+    height: 100%
+}
+
+.col {
+    padding: 0
+}
+
+#head {
+    text-align: center;
+    height: 100%;
+    line-height: 100%
+}
+
+#heading {
+    position: relative;
+    top: 20%
+}
+
+#heading i {
+    font-size: 160px;
+    margin: 60px;
+    color: var(--bs-gray-dark)
+}
+
+#head-text h1 {
+    font-size: 60px;
+    color: var(--bs-gray-dark)
+}
+
+#banner-clean {
+    margin-top: 100px
+}
