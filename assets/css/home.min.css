@@ -1,3 +1,10 @@
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .bs-icon {
     --bs-icon-size: .75rem;
     display: flex;
