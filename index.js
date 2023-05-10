@@ -6,12 +6,12 @@
  * @LastEditTime: 2022-10-25 13:13:28
  */
 
-const {app, BrowserWindow, ipcMain, dialog, Menu, MenuItem} = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, Menu, MenuItem } = require('electron')
 const path = require('path')
 const { spawn, exec } = require('child_process');
 
 let mainWindow;
-function createWindow () {
+function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1280,
     minWidth: 1280,
@@ -163,12 +163,12 @@ const template = [
         label: '加入交流学习QQ群',
         // accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Alt+Shift+I',
         click: () => {
-          dialog.showMessageBox(mainWindow,{
+          dialog.showMessageBox(mainWindow, {
             type: "info",
             title: "提示",
             message: "软件使用交流群、编程学习交流群：647165120",
-            buttons:["确定"]
-          }).then((index)=>{});
+            buttons: ["确定"]
+          }).then((index) => { });
         }
       },
       {
@@ -196,12 +196,12 @@ const template = [
         label: '关于',
         // accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Alt+Shift+I',
         click: () => {
-          dialog.showMessageBox(mainWindow,{
+          dialog.showMessageBox(mainWindow, {
             type: "info",
             title: "提示",
             message: "软件版本：1.0.0\n软件版权：本软件版权归作者所有，软件仅供学习使用禁止任何人或组织机构用作商业用途。\n软件简介：本软件是为智能设备编程研发的程序编辑器，采用可视化拖拽式积木编程，有效降低编程难度且能更直观理解程序逻辑。软件主要用在基于Linux操作系统的智能设备远程程序开发和调试。\n另外软件还结合物联网开发实现上位机和下位机的程序开发，实现物联网设备互联互通。",
-            buttons:["确定"]
-          }).then((index)=>{});
+            buttons: ["确定"]
+          }).then((index) => { });
 
         }
       }
@@ -248,7 +248,7 @@ function ImportBlockModule(filename, callback = null) {
               if (callback) callback('');
             });
           }).catch(() => {
-              console.log('解压失败')
+            console.log('解压失败')
           })
         });
       } else {
@@ -256,14 +256,14 @@ function ImportBlockModule(filename, callback = null) {
       }
     });
   }).catch(() => {
-      console.log('解压失败')
+    console.log('解压失败')
   })
 }
 
 function OpenBlockModule() {
   dialog.showOpenDialog(mainWindow, {
     title: "导入模块",
-    filters :[
+    filters: [
       { name: 'Module', extensions: ['pbmd'] }
     ],
     properties: ['openFile']
@@ -277,12 +277,12 @@ function OpenBlockModule() {
         } else {
           msg = '模块倒入失败'
         }
-        dialog.showMessageBox(mainWindow,{
+        dialog.showMessageBox(mainWindow, {
           type: "warning",
           title: "提示",
           message: msg,
-          buttons:["确定"]
-        }).then((index)=>{});
+          buttons: ["确定"]
+        }).then((index) => { });
       });
     }
   }).catch(err => {
@@ -309,7 +309,7 @@ ipcMain.on('app-path', function (event, arg) {
 ipcMain.on('showOpenDialog', function (event, arg) {
   dialog.showOpenDialog(mainWindow, {
     title: "打开文件",
-    filters :[
+    filters: [
       { name: 'pms-project', extensions: ['pmsproj'] }
     ],
     properties: ['openFile']
@@ -325,8 +325,8 @@ ipcMain.on('showOpenDialog', function (event, arg) {
 ipcMain.on('showSaveDialog', function (event, arg) {
   dialog.showSaveDialog(mainWindow, {
     title: "保存文件",
-    defaultPath : arg,
-    filters :[
+    defaultPath: arg,
+    filters: [
       { name: 'pms-project', extensions: ['pmsproj'] }
     ],
     properties: ['openFile']
@@ -348,8 +348,8 @@ ipcMain.on('local-python-run', function (event, arg) {
     });
   } else if (process.platform == 'win32') {
     let command = 'cmd /K python ';
-    command += arg.debugCommand ? arg.debugCommand+' ' : '';
-    command += arg.filename+'\n';
+    command += arg.debugCommand ? arg.debugCommand + ' ' : '';
+    command += arg.filename + '\n';
     const process = spawn(command, {
       shell: true,
       detached: true
@@ -435,7 +435,7 @@ const device = require('./addons/device');
 ipcMain.on('device-python-run', function (event, data) {
   if (connected.sftp) {
     let arr = data.filename.split('\\');
-    let file = arr[arr.length-1]; 
+    let file = arr[arr.length - 1];
     let paths = {};
     paths.userdir = `/home/${connected.username}`;
     paths.exedirname = 'ev3-block';
@@ -480,7 +480,7 @@ ipcMain.on('device-shell-close', function (event, data) {
   }
 });
 
-OutputFilter = function(streamStr) {
+OutputFilter = function (streamStr) {
   streamStr = streamStr.indexOf('chmod') > -1 ? '' : streamStr;
   streamStr = streamStr.indexOf('cd') > -1 ? '' : streamStr;
   streamStr = streamStr.indexOf('Last login') > -1 ? '' : streamStr;
@@ -496,37 +496,42 @@ const cheerio = require('cheerio');
 function UpdateCheck() {
   let url = 'https://gitee.com/supercoderlee/pinmashi/releases';
   https.get(url, (response) => {
-      let data = '';
-      response.on('data', (chunk) => {
-          data += chunk;
-      });
-      response.on('end', () => {
-          var $ = cheerio.load(data);
-          var version = $('.tag-name').attr('data-tag-name');
-          console.log(version);
-          if (version == 'v1.0.0') {
-              LoadJavaScript(src, callback);
-          } else {
-              setTimeout(() => {
-                  dialog.showMessageBox(mainWindow,{
-                    type: "info",
-                    title: "提示",
-                    message: `请更新到最新版本 ${version}`,
-                    buttons:["确定"]
-                  }).then((index)=>{
-                    exec('start https://github.com/supercoderlee/pinmashi/releases');
-                  });
-              }, 1000);
-          }
-      });
-  }).on('error', (error) => {
-      setTimeout(() => {
-        dialog.showMessageBox(mainWindow,{
+    let data = '';
+    response.on('data', (chunk) => {
+      data += chunk;
+    });
+    response.on('end', () => {
+      var $ = cheerio.load(data);
+      var version = $('.tag-name').attr('data-tag-name');
+      console.log(version);
+      if (version == 'v1.0.0') {
+        dialog.showMessageBox(mainWindow, {
           type: "info",
           title: "提示",
-          message: "网络无法连接",
-          buttons:["确定"]
-        }).then((index)=>{});
-      }, 1000);
+          message: `当前 ${version} 为最新版本`,
+          buttons: ["确定"]
+        }).then((index) => { });
+      } else {
+        setTimeout(() => {
+          dialog.showMessageBox(mainWindow, {
+            type: "info",
+            title: "提示",
+            message: `请更新到最新版本 ${version}`,
+            buttons: ["确定"]
+          }).then((index) => {
+            exec('start https://github.com/supercoderlee/pinmashi/releases');
+          });
+        }, 1000);
+      }
+    });
+  }).on('error', (error) => {
+    setTimeout(() => {
+      dialog.showMessageBox(mainWindow, {
+        type: "info",
+        title: "提示",
+        message: "网络无法连接",
+        buttons: ["确定"]
+      }).then((index) => { });
+    }, 1000);
   });
 }
