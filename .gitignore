@@ -8,7 +8,8 @@ src
 *.gyp
 *.txt
 yarn.lock
-.vscode
+.vscode/*
+!.vscode/launch.json
 *.dev.js
 build/node_modules
 build/Release
