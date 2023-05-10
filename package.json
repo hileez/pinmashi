@@ -92,8 +92,6 @@
   },
   "devDependencies": {
     "electron": "^20.0.2",
-    "electron-builder": "^23.6.0",
-    "node-addon-api": "^5.0.0",
-    "node-gyp": "^9.3.0"
+    "electron-builder": "^23.6.0"
   }
 }
