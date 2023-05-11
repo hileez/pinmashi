@@ -1,6 +1,6 @@
 {
     "name": "default",
-    "title": "默认标准模块",
+    "title": "标准模块",
     "main": "index.js",
-    "description": "PyBlocks默认积木编程模块，包含基础逻辑、运算、变量、函数等基础积木。"
+    "description": "基础编程模块，包含基础逻辑、运算、变量、函数等基础积木。"
 }
