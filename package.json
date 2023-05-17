@@ -6,9 +6,9 @@
   "scripts": {
     "start": "electron .",
     "build": "node-gyp configure build",
-    "rebuild": "node-gyp rebuild",
-    "clean": "node-gyp clean",
-    "electron-build": "electron-builder"
+    "gyp-rebuild": "node-gyp rebuild",
+    "gyp-clean": "node-gyp clean",
+    "ebuild": "electron-builder"
   },
   "build": {
     "productName": "PinMaShi",
@@ -32,8 +32,8 @@
       "!README.md",
       "!release",
       "!*.dev.js",
-      "!renderer.js",
-      "!index.js"
+      "!*.js",
+      "*.min.js"
     ],
     "extraResources": [
       {

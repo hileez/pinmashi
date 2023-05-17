@@ -9,7 +9,7 @@ function createWindow() {
     height: 860,
     minHeight: 860,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'preload.min.js'),
       sandbox: false,
     }
   })
@@ -149,7 +149,7 @@ const template = [
     label: '帮助',
     submenu: [
       {
-        label: '加入交流学习QQ群',
+        label: '学习交流QQ群',
         click: () => {
           dialog.showMessageBox(mainWindow, {
             type: "info",
@@ -160,7 +160,7 @@ const template = [
         }
       },
       {
-        label: '官方Github',
+        label: 'Github开源仓库',
         click: () => {
           exec('start https://github.com/supercoderlee/pinmashi');
         }
