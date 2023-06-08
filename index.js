@@ -4,13 +4,14 @@ const { spawn, exec } = require('child_process');
 let mainWindow;
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1280,
-    minWidth: 1280,
-    height: 860,
-    minHeight: 860,
+    width: 1080,
+    minWidth: 1080,
+    height: 740,
+    minHeight: 740,
     webPreferences: {
       preload: path.join(__dirname, 'preload.min.js'),
       sandbox: false,
+      webviewTag:true
     }
   })
   mainWindow.loadFile('./assets/pages/home.html')
